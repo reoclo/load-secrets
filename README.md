@@ -1,6 +1,6 @@
 # Reoclo Load Secrets (`@reoclo/load-secrets`)
 
-Load secrets from the [Reoclo](https://reoclo.com) Secrets Manager into your GitHub Actions environment. Later steps read them as ordinary environment variables. This is the Reoclo counterpart to [`1Password/load-secrets-action`](https://github.com/1Password/load-secrets-action).
+Load secrets from the [Reoclo](https://reoclo.com) Secrets Manager into your GitHub Actions environment. Later steps read them as ordinary environment variables.
 
 Keep your secrets in the Reoclo Secrets Manager and read them at run time with one scoped automation key. You do not copy every secret into GitHub Secrets, and you keep one source of truth.
 
