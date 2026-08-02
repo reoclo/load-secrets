@@ -1,0 +1,39 @@
+name: 'Reoclo Load Secrets'
+description: 'Resolve secrets from the Reoclo Secrets Manager and load them into the workflow environment'
+branding:
+  icon: 'key'
+  color: 'blue'
+inputs:
+  api_key:
+    description: 'Reoclo automation API key (rca_...). A session key (rss_...) is also accepted.'
+    required: true
+  projects:
+    description: 'Limit to these secret projects (names or ids), newline- or comma-separated. Default: every project the key is granted.'
+    required: false
+  prefix:
+    description: 'Optional prefix prepended to every loaded environment variable name.'
+    required: false
+    default: ''
+  cleanup:
+    description: 'Unset the loaded secrets from the environment in a post-step at job end.'
+    required: false
+    default: 'true'
+  commit:
+    description: 'Commit SHA recorded in the secrets audit trail. Defaults to github.sha.'
+    required: false
+  api_url:
+    description: 'Reoclo API URL (for self-hosted instances).'
+    required: false
+    default: 'https://api.reoclo.com'
+outputs:
+  session_id:
+    description: 'Reoclo secrets session id for the audit trail'
+  loaded_count:
+    description: 'Number of secrets loaded into the environment'
+  loaded_keys:
+    description: 'Comma-separated names of the loaded environment variables (names only, never values)'
+runs:
+  using: 'node24'
+  main: 'dist/index.js'
+  post: 'dist/post/index.js'
+  post-if: always()

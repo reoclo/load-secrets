@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm check
+
+      - name: Test
+        run: pnpm test
+
+      # Compiled action: dist/ is committed and executed at runtime. Rebuild and
+      # fail if it drifts from source, so a stale bundle can never ship in a tag.
+      - name: Verify dist is up to date
+        run: |
+          pnpm build
+          if ! git diff --quiet -- dist; then
+            echo "::error::dist/ is out of date — run 'pnpm build' and commit the result." >&2
+            git --no-pager diff --stat -- dist >&2
+            exit 1
+          fi
