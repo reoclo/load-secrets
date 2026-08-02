@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@10.16.0",
   "description": "Resolve secrets from the Reoclo Secrets Manager and load them into the workflow environment",
   "scripts": {
     "build": "ncc build src/index.ts -o dist --source-map --license licenses.txt && ncc build src/post.ts -o dist/post --source-map",
