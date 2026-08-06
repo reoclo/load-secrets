@@ -38,7 +38,7 @@ Each secret **key** in your granted projects becomes an **environment variable n
 
 The **Read secrets** operation alone grants no project. You must complete step 2.
 
-If your repository already has a secret named `REOCLO_API_KEY`, keep it and pass it to `api_key`. The action provides `REOCLO_AUTOMATION_KEY` to the CLI.
+If your repository already has a secret named `REOCLO_API_KEY`, keep it and pass it to `api_key`. The action reads `api_key` and calls the Reoclo API directly. It does not use a CLI or set `REOCLO_AUTOMATION_KEY`.
 
 ## Inputs
 
