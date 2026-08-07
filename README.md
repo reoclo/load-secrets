@@ -22,7 +22,7 @@ jobs:
       - name: Load secrets
         uses: reoclo/load-secrets@v1
         with:
-          api_key: ${{ secrets.REOCLO_API_KEY }}
+          api_key: ${{ secrets.REOCLO_AUTOMATION_KEY }}
 
       - name: Use them
         run: ./run-migrations.sh   # DB_URL, API_TOKEN, ... are now env vars, masked in logs
@@ -34,9 +34,11 @@ Each secret **key** in your granted projects becomes an **environment variable n
 
 1. In the Reoclo dashboard, create an **Automation Key** and enable the **Read secrets** operation.
 2. Grant that key each secret **project** it must read. Open the project **Access** tab and add the grant.
-3. Add the key to your repository as a GitHub Actions secret named `REOCLO_API_KEY`.
+3. Add the key to your repository as a GitHub Actions secret named `REOCLO_AUTOMATION_KEY`.
 
 The **Read secrets** operation alone grants no project. You must complete step 2.
+
+If your repository already has a secret named `REOCLO_API_KEY`, keep it and pass it to `api_key`. The action reads `api_key` and calls the Reoclo API directly. It does not use a CLI or set `REOCLO_AUTOMATION_KEY`.
 
 ## Inputs
 
@@ -64,7 +66,7 @@ The **Read secrets** operation alone grants no project. You must complete step 2
 ```yaml
 - uses: reoclo/load-secrets@v1
   with:
-    api_key: ${{ secrets.REOCLO_API_KEY }}
+    api_key: ${{ secrets.REOCLO_AUTOMATION_KEY }}
     projects: |
       production-api
       shared-infra
@@ -75,7 +77,7 @@ The **Read secrets** operation alone grants no project. You must complete step 2
 ```yaml
 - uses: reoclo/load-secrets@v1
   with:
-    api_key: ${{ secrets.REOCLO_API_KEY }}
+    api_key: ${{ secrets.REOCLO_AUTOMATION_KEY }}
     prefix: APP_        # a secret keyed DB_URL loads as APP_DB_URL
 ```
 
@@ -84,12 +86,12 @@ The **Read secrets** operation alone grants no project. You must complete step 2
 ```yaml
 - uses: reoclo/load-secrets@v1
   with:
-    api_key: ${{ secrets.REOCLO_API_KEY }}
+    api_key: ${{ secrets.REOCLO_AUTOMATION_KEY }}
     projects: production-api
 
 - uses: reoclo/run@v2
   with:
-    api_key: ${{ secrets.REOCLO_API_KEY }}
+    api_key: ${{ secrets.REOCLO_AUTOMATION_KEY }}
     server_id: ${{ secrets.REOCLO_SERVER_ID }}
     env: |
       DB_URL=${{ env.DB_URL }}
@@ -101,7 +103,7 @@ The **Read secrets** operation alone grants no project. You must complete step 2
 ```yaml
 - uses: reoclo/load-secrets@v1
   with:
-    api_key: ${{ secrets.REOCLO_API_KEY }}
+    api_key: ${{ secrets.REOCLO_AUTOMATION_KEY }}
     api_url: https://reoclo.example.com
 ```
 
