@@ -138,4 +138,4 @@ The action also runs on Gitea Actions. The Gitea runner image must provide Node 
 
 ## License
 
-MIT
+Apache-2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
